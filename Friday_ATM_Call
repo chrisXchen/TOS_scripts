@@ -1,0 +1,27 @@
+# Script charts on the lower subgraph 1 if the day is friday and 0 otherwise
+# SHORT TERM GOAL: chart the profitability of opening an atm call on fridays then closing them at an arbitrary profit target and/or stop loss
+# LONG TERM GOALL: chart the profitability of opening an iron butterfly atm on mondays wednesdays and fridays then closing them-
+#  at an arbitrary profit target, stop loss, or simply one hour after they were opened.
+
+declare lower;
+
+# ALL HINTS refer to this test being done on the date: 09/03/2021
+
+#hint Returns "2,021"
+def CurrentYear = GetYear();
+
+#hint Returns "9"
+def CurrentMonth = GetMonth();
+
+#hint Returns "3"
+def CurrentDOM = GetDayOfMonth(GetYYYYMMDD());
+
+# Converts CurrentYear to YYYYMMDD by adding 4 zeroes, then adds the last 4 digits by 
+# simply adding them according to what digit space they need to occupy
+def CurrentDOW = GetDayOfWeek(CurrentYear * 10000 + CurrentMonth * 100 + CurrentDOM); 
+
+def SimpleExpiryDay = if CurrentDOW - 5 == 0 
+    then yes 
+    else no;
+
+plot Data = SimpleExpiryDay;
